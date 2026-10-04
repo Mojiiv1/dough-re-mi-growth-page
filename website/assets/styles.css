@@ -46,3 +46,62 @@ html[data-theme="dark"] .eyebrow{color:#BFD0B2}.lead{font-size:1.1rem;color:var(
 @media(max-width:1023px){.menu-btn{display:grid}.links{position:absolute;left:20px;right:20px;top:68px;display:none;flex-direction:column;align-items:stretch;background:var(--cream2);padding:16px;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.links.open{display:flex}.links a{min-height:48px;display:flex;align-items:center;padding:0 12px}.quick-grid{grid-template-columns:1fr}.quick-item+.quick-item{border-left:0;border-top:1px solid var(--line)}.story,.two{grid-template-columns:1fr;gap:36px}.grid3{grid-template-columns:1fr 1fr}.menu-list{grid-template-columns:1fr}.visit{grid-template-columns:1fr}.visit img{min-height:350px}.gallery{grid-template-columns:1fr 1fr}.gallery .wide{grid-column:auto}}
 @media(max-width:767px){.container{width:calc(100% - 32px)}.section{padding:64px 0}.section-head{flex-direction:column;align-items:flex-start}.hero{min-height:680px}.hero:after{background:linear-gradient(0deg,rgba(18,14,11,.92),rgba(18,14,11,.52) 65%,rgba(18,14,11,.24))}.hero-content{padding-bottom:48px}.hero-ctas{display:grid}.hero-ctas .btn{width:100%}.quick{margin-top:-18px}.grid3{grid-template-columns:1fr}.gallery{grid-auto-rows:160px;gap:8px}.gallery .large{grid-column:span 2;grid-row:span 2}.gallery .wide{grid-column:span 2}.review{padding:32px 24px;flex-direction:column;align-items:flex-start}.visit-copy{padding:32px 24px}.menu-item{grid-template-columns:100px 1fr}.footer-grid,.footer-bottom{flex-direction:column}.mobilebar{position:fixed;display:grid;grid-template-columns:repeat(3,1fr);left:12px;right:12px;bottom:12px;z-index:80;background:var(--cream2);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.mobilebar a{min-height:62px;display:grid;place-items:center;text-decoration:none;font-weight:800;font-size:.83rem}.mobilebar a+a{border-left:1px solid var(--line)}.footer{padding-bottom:110px}.backtop{bottom:90px}.theme-menu{right:-54px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+
+
+/* FINAL QA PATCH */
+:root { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+
+/* Keep the footer deliberately dark in both themes. */
+.footer {
+  background: #241F1B;
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .footer {
+  background: #0D110F;
+}
+.footer h1,
+.footer h2,
+.footer h3 { color: #FFFFFF; }
+
+/* Active navigation needed a lighter dark-mode treatment. */
+html[data-theme="dark"] .links a[aria-current="page"] {
+  color: #C5D7B8;
+}
+
+/* Make floating menus reliably layer above page content. */
+.theme-menu { z-index: 150; }
+@media(max-width:1023px) {
+  .links { z-index: 140; }
+}
+
+/* Make button states intentional and clear. */
+.btn:active,
+.icon-btn:active,
+.filters button:active {
+  transform: translateY(1px);
+}
+button:disabled,
+.btn[aria-disabled="true"] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* Stronger dark-mode control surfaces. */
+html[data-theme="dark"] .icon-btn,
+html[data-theme="dark"] .secondary,
+html[data-theme="dark"] .theme-menu,
+html[data-theme="dark"] .filters button {
+  border-color: rgba(255,255,255,.18);
+}
+
+/* Long labels and user zoom should wrap safely. */
+.btn,
+.quick-item,
+.mobilebar a,
+.links a {
+  overflow-wrap: anywhere;
+}
+
+/* Preserve comfortable touch targets even at high zoom. */
+.theme-menu button { min-height: 44px; }
