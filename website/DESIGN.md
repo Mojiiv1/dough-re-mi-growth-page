@@ -54,3 +54,5 @@ Dark-mode surface separation is deliberate: warm green canvas, visibly raised co
 
 ## Review provenance
 Two short excerpts were read directly on the supplied Google Maps business profile on 2026-10-04: pat b, “Definitely my new favourite spot.”; jerry buburuz, “Nice café and bakery friendly staff”. Both are excerpts, labeled as such in the UI; punctuation and wording within the excerpts are preserved. Source: https://maps.app.goo.gl/B6CUK27HFEZUmbQdA . No reviewer photos, numerical ratings or counts are reproduced. Review statements are visitor opinions, not menu verification.
+
+Standalone review links and the brand home link retain 48px minimum height. The theme popover scrolls internally on short viewports so both choices remain reachable. Hours guidance links to the supplied Google profile without publishing an unverified schedule.

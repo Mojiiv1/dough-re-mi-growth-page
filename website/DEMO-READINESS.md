@@ -2,6 +2,11 @@
 
 This is sufficient for a guided prospect demo: four complete routes, real café photography, menu category browsing, location/directions, Instagram, accessible gallery, Light/Dark appearance and clear temporary menu/story copy. It is not an owner-approved production website.
 
+## Ready to demonstrate
+- Home, Menu, Our Story and Visit in Light and Dark.
+- Real photo gallery with keyboard controls, menu category filtering, directions, and hours guidance linked to Google.
+- Two attributed review excerpts, copy address, and share-link fallback.
+
 ## Before presenting
 - Open Home, Menu, Our Story and Visit; demonstrate a narrow phone viewport and Dark mode.
 - Explain that the full menu and business story are awaiting owner input. Category previews are not a priced menu.

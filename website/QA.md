@@ -82,3 +82,25 @@ Dark canvas changed to #1b211c, surfaces #263027 / #303c31, cream text #fff7eb, 
 Measured dark contrast: primary text/canvas 15.42:1; muted/canvas 10.34:1; text/raised surface 10.88:1; muted/raised surface 7.29:1; primary CTA 10.91:1; muted review text 5.97:1; control border/raised surface 4.92:1; control border/review surface 4.03:1; focus/raised surface 7.34:1. Numerical contrast passes do not substitute for visual hierarchy or complete accessibility evaluation.
 
 Executed: all four pages × six widths × two themes (48 layout checks, 96 axe audits including open popovers); after inserting verified excerpts, Home repeated at all six widths/both themes (12 layout checks, 24 axe audits); six lightbox hover axe audits; pressed CTA opacity checks. Zero violations in those audits. Internal links/assets resolved. Repeated both-theme interaction suite: skip link, headings, navigation, lightbox arrows/focus, filters, actual clipboard copy/share fallback, mocked Web Share payload, touch targets, footer clearance, noindex and 200% text enlargement/reflow. No page errors. Inspected full-page dark desktop screenshot of final review composition. Native share UI, physical devices and screen readers were not tested.
+
+# Focused refinement and change-control audit — 2026-10-04
+
+Baseline/branch: main at 675d4a8, confirmed in history. Initial status was clean. When the additional change-control instructions arrived, implementation was already underway; branch/status/history were then explicitly rechecked. All current modifications belong to this pass, with no unrelated changes overwritten.
+
+Audit findings identified before implementation:
+1. Hours guidance asks the visitor to check Google but was not itself a link: linked the same approved profile destination.
+2. Standalone review link and mobile brand link had small touch areas: use existing 48px spacing token for minimum height.
+3. Theme popover lacked a short-viewport height constraint: add internal scrolling and a viewport cap composed from existing spacing tokens.
+4. Repeated “coffee break” filler in category copy: concise factual replacements, preserving categories and menu honesty.
+5. Demo readiness documentation did not have a distinct ready-to-demonstrate list: added one without expanding website features.
+
+Executed QA:
+- 48 page/theme/width layout cases (four pages, Light/Dark, 320/375/430/768/1024/1440), 96 WCAG A/AA axe checks with closed/open theme panel: passed, zero violations.
+- Extra 320×240 viewport check: popover fits vertically; both choices reachable by keyboard; brand/review links at least 48px tall.
+- Both-theme regression suite: heading hierarchy, skip link, keyboard mobile navigation, gallery arrows/Tab containment/Escape/focus restoration, category filters/reload, clipboard address copy and share fallback, mocked native-share payload, 44px control targets, footer clearance, noindex and 200% text enlargement/reflow. Passed with no page errors. Theme persistence and reduced motion also passed.
+- Internal links/local assets resolve. Dark contrast recomputed: primary text 15.42:1, muted text 10.34:1, primary CTA 10.91:1; no palette changes needed.
+- Captured and manually inspected all 16 requested screenshots: Home/Menu/About/Visit at 375/1440, Light/Dark. Compared shared containers/gutters, heading/section spacing, button geometry, image crops, surface contrast and footers. No further visual change justified. Full-page screenshots place fixed bars at the capture viewport position; separate bottom-of-page geometry assertions confirm footer clearance.
+- Performance/source review: no JS changes or new listeners, dependencies, network integrations, assets or font weights. Existing 900px JPEG photos are approximately 94–175KB; no optimized alternatives exist in this checkout. Existing 509KB logo retained to respect asset scope. Hero priority, below-fold lazy loading, explicit dimensions and async decoding unchanged. No new asynchronous layout source introduced; a dedicated CLS benchmark was not run.
+- Canonical/OG URLs and robots metadata unchanged. No tracking, embeds, forms, widgets, photo downloads or new business facts. Only the changed stylesheet cache key is refreshed; JS/token cache keys retained.
+
+Limits: no physical-device, screen-reader, native share-sheet or native browser-menu zoom testing. Automated results are regression evidence, not complete WCAG certification. Stop condition reached: audited issues fixed and QA passed.
