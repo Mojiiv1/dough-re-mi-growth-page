@@ -21,3 +21,12 @@ This /website/ preview does not change the existing Growth Page at the repositor
 
 Design system: DESIGN.md describes intent; assets/tokens.css defines semantic values; assets/styles.css consumes them.
 QA evidence and limitations: QA.md.
+
+Production information required from the business:
+- Official phone and exact opening hours.
+- Full menu, prices and any dietary/availability claims.
+- Direct Google Review URL for the future NFC/QR review flow. Keep the existing Google Profile CTA until supplied; update its label and destination together.
+- Founder/business story and services (catering, custom cakes, ordering).
+- Final production domain.
+
+Keep noindex,nofollow until an explicitly approved production launch. Reconfirm the displayed Google rating before launch; exact review counts are omitted. After owner confirmation, implement Bakery / CafeOrCoffeeShop JSON-LD with verified name, address, phone, hours, official website and Instagram. Do not invent ratings, geo coordinates or menu data.
