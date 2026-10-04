@@ -1,0 +1,49 @@
+# Dough Re Mi — café design system
+
+## 1. Product context
+A prospect demo for Tap & Grow Ottawa, limited to `/website/`. The root NFC Growth Page and its shared photographs are protected. Static HTML, CSS and vanilla JavaScript must remain deployable on GitHub Pages.
+
+## 2. User goals
+Visitors arriving from NFC, QR, Maps or Instagram should recognize the café, see its food, explore menu categories and find directions immediately. Home → Menu / Our Story / Visit remains the complete architecture.
+
+## 3. Brand atmosphere
+Warm, calm and approachable. Cream paper, forest accents and natural food photography carry the identity. Use an editorial split hero with readable text beside an unobscured photograph; stack text before photography on phones. Avoid decorative overlays and giant banners.
+
+## 4. Color semantics
+`assets/tokens.css` is the implementation source of truth. Background, surface, raised surface, text, muted text, border, control border, accent, accent-hover, accent-on, focus, success, warning and danger describe roles, not pigments. Dark mode overrides these roles with charcoal-green surfaces and warm text. Inverse sections have an explicit background/text pair. Never inherit an accent button's text color from navigation rules. Photographs are never dimmed or inverted.
+
+## 5. Typography
+Playfair Display 600 for headings; DM Sans 400 and 700 for body and controls. H1 44–72px, H2 34–48px, H3 24px; body 16px, lead 18px, metadata 14px. Headings use balanced wrapping. Body paragraphs stay within 65ch. Use rem units and allow wrapping at enlarged text sizes.
+
+## 6. Spacing and grid
+4, 8, 12, 16, 24, 32, 48, 64 and 96px form the spacing scale. Semantic section, gutter and component tokens consume that scale. Content maximum 1200px; gutters 16px mobile, 32px tablet/desktop. Sections 64px mobile, 96px desktop. Use intrinsic grid tracks with minmax(0,1fr). Borders (1px), focus outlines (3px), image aspect ratios and responsive breakpoints are technical exceptions to the spacing scale.
+
+## 7. Radius and elevation
+Controls 8px, buttons 12px, image containers 16px. Pills only for category filters and status tags. Content categories are open image-and-copy columns, not elevated cards. Panels use dividers. Only floating menus/dialogs use elevation.
+
+## 8. Components
+Header: brand, navigation, labeled Theme and Menu controls. Navigation is a disclosure on smaller screens, not a modal or keyboard trap. Hero: one H1, short description and two actions. Quick information: flat divided row. Category tiles: natural image plus concise copy, no false hover affordance on static articles. Gallery: actual buttons opening a named native modal dialog. Menu: category previews, no fabricated dishes/prices. Footer: stable inverse section. Mobile actions: three equal targets with safe-area padding and reserved document space.
+
+## 9. Interaction states
+Every button/link has default, hover, visible keyboard focus and active feedback without changing geometry. Disabled buttons suppress activation and use muted styling; selected filters and theme options use aria-pressed plus a check/underline. Disclosures expose aria-expanded and aria-controls. Copy/share have busy states and a polite status message. Escape closes disclosures and restores focus; leaving a disclosure closes it. Native dialog supplies background inertness and focus containment; close restores the originating thumbnail. URL query state preserves menu filters and browser Back restores them.
+
+## 10. Motion
+Enter 200ms, exit 140ms; standard easing cubic-bezier(0.23,1,0.32,1). Only small feedback opacity transitions. No page entrance, continuous motion, image hover zoom or layout animation. Reduced motion removes transitions and smooth scrolling.
+
+## 11. Accessibility
+Target WCAG 2.2 AA: text 4.5:1, large text and essential component boundaries 3:1. Use named landmarks, one H1, sequential heading levels, skip link, meaningful image alternatives, 48px controls and 3px focus outlines. No positive tabindex. Sticky areas must not hide focused controls. Support 320px width, 200% zoom, keyboard navigation and touch swipe alternatives. Label the lightbox, announce its counter, support arrows and Escape. No information relies on color alone.
+
+## 12. Responsive behavior
+Mobile first. Stack hero, story and visit sections; gallery remains a compact two-column composition. At 768px widen content; at 1024px use full navigation and paired layouts. At short viewport heights remove sticky header/mobile action bar so zoomed visitors retain usable space. Respect all safe-area insets.
+
+## 13. Content voice
+Short, welcoming, factual and local. Use “Full menu coming soon” and “Check Google for current hours.” Internal implementation notes belong here, never in the customer page. Ratings are approximate research snapshots, with no rating schema. Preserve original photo context; do not claim ingredients from appearance alone.
+
+## 14. Anti-patterns
+No SaaS styling, glassmorphism, large blurry shadows, nested rounded cards, arbitrary spacing, duplicate theme CSS, raw component colors, oversized headings, filler sections, frameworks or invented business details. Do not add dead component rules. Keep HTML readable.
+
+## 15. Production unknowns and safeguards
+Business confirmation is required for phone, hours, exact menu/prices, founder story, services and final domain. Do not imply catering, custom cakes or ordering. Keep noindex,nofollow on all four pages. Canonical/OG URLs retain the preview path until production. Structured data may contain only supplied business name, address and official links. Use original repository images, intrinsic dimensions, async decoding, hero priority and lazy loading below the fold.
+
+## Process references
+Adapted the separation of intent, tokens and consuming components from [OpenDesign](https://github.com/nexu-io/open-design/tree/main/design-systems), without copying its product interface. Review all applicable [Web Interface Guidelines](https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md); form, media playback, hydration and large-list rules are not applicable to this static site. The supplied brand voice takes precedence over generic title-case guidance.

@@ -11,11 +11,13 @@ Included:
 - accessible mobile navigation
 - sticky mobile quick actions
 - gallery dialog with next/previous, keyboard arrows and swipe support
-- menu category filters
+- menu category filters with URL and browser Back support
 - copy address and share actions
-- back-to-top control
 - reduced-motion support
 - semantic landmarks, visible focus states, skip links
 - no invented phone number, hours, menu prices or founder story
 
 This /website/ preview does not change the existing Growth Page at the repository root.
+
+Design system: DESIGN.md describes intent; assets/tokens.css defines semantic values; assets/styles.css consumes them.
+QA evidence and limitations: QA.md.
