@@ -1,29 +1,46 @@
-# Website QA — 2026-10-03
+# Theme revision QA — 2026-10-03
 
-Scope: only `/website/`. Baseline commit: `4a4f765`.
+Scope: focused Light/Dark UX revision from baseline `a476e2e`, only `/website/`.
 
-## Browser checks
-- Headless Microsoft Edge via Playwright; four pages × 320, 375, 430, 768, 1024, 1440 CSS pixels × light/dark = 48 passing layout cases.
-- No horizontal overflow, broken images, duplicate H1s or undersized tested button/quick-action targets.
-- axe-core 4.10.3: zero WCAG A/AA violations in all 48 cases; open theme panel and gallery dialog also had zero violations. Automated checks do not establish full WCAG conformance.
-- Inspected desktop/mobile screenshots in light/dark. Original repository photos retain natural colors; removed a duplicate gallery composition in favor of the existing guest-with-coffee photo.
-- Enter/Space selection, Tab/Shift+Tab, Escape, theme focus restoration, outside click, navigation disclosure and skip link checked.
-- Light/Dark persistence, System live OS changes, initial theme with storage unavailable and theme-color synchronization checked.
-- Native lightbox: named dialog, next/previous arrows, synthetic touch swipe, Escape, focus restoration and Tab containment checked. Background is inert through showModal().
-- Filters: selection, URL query, reload and browser Back checked.
-- Reduced motion disables smooth scrolling. No image zoom or entrance animations remain.
-- 640×400 CSS viewport reflow (equivalent layout viewport of 1280×800 at 200% zoom) and 200% root text enlargement pass on all four pages. Native browser-menu 200% zoom was not directly exercised; physical iOS safe-area behavior and assistive-technology testing remain manual QA.
+## Executed browser checks
+Headless Microsoft Edge through Playwright, with axe-core 4.10.3.
 
-## Contrast
-Representative light/dark token ratios: primary text/background 12.92/15.73; muted text/surface 6.39/8.91; primary button text/background 9.22/9.06; control borders/surface 3.64/4.62. Inverse sections use a dedicated light focus token after the original light-theme focus ring measured only 2.25 against the dark section.
+- All four pages × 320, 375, 430, 768, 1024, 1440 CSS pixels × Light/Dark: 48 passing layout cases.
+- 96 axe audits (each page with popover closed and open): zero WCAG A/AA violations for wcag2a, wcag2aa, wcag21aa, wcag22aa tags.
+- Popover fits the viewport and hit-testing confirms it is above the page; no horizontal scrolling.
+- After the final shared trigger-width and coffee-accent specificity refinements, reran Home at all six widths in both themes: 12 layout cases and 24 additional axe audits, all passing.
+- Captured and visually reviewed all four pages on desktop/mobile in Light/Dark: header, hero, category tiles, menu filters, quick information/actions, review section, visit surfaces and footer. Existing photography is unchanged, with no image filters.
+- Exactly two appearance choices. Light is default even with an emulated dark OS. Changing OS appearance does not change the site.
+- Light → Dark → refresh retains Dark; Dark → Light → refresh retains Light. Trigger label/icon and aria-pressed match the choice.
+- Legacy `system` and invalid saved values normalize to `light` in both the page and localStorage on reload.
+- Unavailable localStorage defaults to Light without errors.
+- Enter opens, Space selects; Tab and Shift+Tab traverse options; Escape and selection restore trigger focus; outside click dismisses.
+- Reduced motion still disables smooth scrolling. No full-page color animation introduced.
+- No JavaScript page errors during the tests.
 
-## Content, links and safeguards
-- All local links, stylesheets, scripts and image paths resolve.
-- Supplied Maps URL returns HTTP 200 and resolves to Dough Re Mi - Bakery & Cafe. Supplied Instagram URL returns HTTP 200; availability of public profile contents can depend on Instagram login/access restrictions.
-- Unique titles, descriptions, canonical and OG fields exist on all pages; all retain noindex,nofollow.
-- No phone, exact hours, prices, founder claims, rating schema or unverified services added.
-- Hero fetch priority, lazy below-fold images, intrinsic dimensions, async decoding, font preconnects and swap retained. Fonts reduced to three required family/weight combinations.
-- JavaScript syntax, Git whitespace check and out-of-scope diff checked before committing.
+## Measured final dark-token contrast
+| Pair | Ratio |
+| --- | ---: |
+| Text / canvas | 15.90:1 |
+| Muted text / canvas | 8.99:1 |
+| Text / surface | 14.45:1 |
+| Text / raised surface | 13.02:1 |
+| Muted text / raised surface | 7.36:1 |
+| Primary button text / olive accent | 9.16:1 |
+| Accent navigation / canvas | 10.08:1 |
+| Muted footer text / footer | 9.47:1 |
+| Muted review text / review surface | 5.66:1 |
+| Coffee accent / canvas | 7.63:1 |
+| Control border / raised surface | 4.49:1 |
+| Control border / review surface | 3.45:1 |
+| Focus / raised surface | 9.46:1 |
+| Inverse focus / review surface | 7.27:1 |
 
-## Review process
-Reviewed all applicable current Web Interface Guidelines from https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md. Forms, hydration, large datasets, media playback and destructive mutations are not present. Business-specific voice overrides generic capitalization preferences. DESIGN.md records the system; tokens.css owns semantic values; components consume them.
+Low-opacity decorative dividers are not used as the sole boundary for controls. Controls retain a separate higher-contrast border. Light text/CTA tokens remain unchanged and Light-mode axe audits pass. Disabled controls retain native disabled semantics; active/hover/focus states do not change button geometry.
+
+## Cleanup and safeguards
+Removed OS appearance queries/listeners, three-state branches, legacy preference dataset, half-circle icon, third option and explanatory sublabels. Remaining `system` occurrences in source concern “design system” or the system-ui font fallback, not theme behavior.
+
+No information architecture, business facts, photo assets, approved fonts or root Growth Page changes. noindex remains. Git whitespace check and JavaScript syntax checked before commit.
+
+Automated audits do not prove full WCAG conformance. This revision did not repeat physical-device, assistive-technology or native browser-menu zoom testing; those remain manual checks from the baseline. Touch-safe spacing and reduced-motion rules were preserved.

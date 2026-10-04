@@ -1,9 +1,8 @@
 (()=>{
   const $=(selector,root=document)=>root.querySelector(selector);
   const $$=(selector,root=document)=>Array.from(root.querySelectorAll(selector));
-  const themeMedia=matchMedia('(prefers-color-scheme: dark)');
-  const validTheme=value=>['light','dark','system'].includes(value)?value:'system';
-  let preference=validTheme(document.documentElement.dataset.themePreference);
+  const validTheme=value=>value==='dark'?'dark':'light';
+  let preference=validTheme(document.documentElement.dataset.theme);
   const themeTrigger=$('[data-theme-trigger]');
   const themePanel=$('[data-theme-panel]');
   const menuButton=$('[data-menu-toggle]');
@@ -11,14 +10,13 @@
 
   function applyTheme(value,persist=false){
     preference=validTheme(value);
-    const resolved=preference==='system'?(themeMedia.matches?'dark':'light'):preference;
-    document.documentElement.dataset.theme=resolved;
-    document.documentElement.dataset.themePreference=preference;
-    $('meta[name="theme-color"]').content=resolved==='dark'?'#141b16':'#f7f2ea';
+    document.documentElement.dataset.theme=preference;
+    $('meta[name="theme-color"]').content=preference==='dark'?'#101713':'#f7f2ea';
     if(persist){try{localStorage.setItem('dough-theme',preference)}catch{}}
     $$('[data-theme-option]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.themeOption===preference)));
-    themeTrigger.setAttribute('aria-label',`Theme: ${preference}${preference==='system'?`, currently ${resolved}`:''}. Change appearance`);
-    $('[data-theme-trigger-icon]').textContent=preference==='light'?'☀':preference==='dark'?'☾':'◐';
+    themeTrigger.setAttribute('aria-label',`Theme: ${preference}. Change appearance`);
+    $('[data-theme-trigger-text]').textContent=preference==='light'?'Light':'Dark';
+    $('[data-theme-trigger-icon]').textContent=preference==='light'?'☀':'☾';
   }
   function closeTheme(restore=false){
     themePanel.hidden=true;
@@ -32,8 +30,7 @@
     if(restore) menuButton.focus();
   }
   applyTheme(preference);
-  themeMedia.addEventListener('change',()=>{if(preference==='system')applyTheme('system')});
-  window.addEventListener('storage',event=>{if(event.key==='dough-theme'||event.key===null)applyTheme(event.newValue)});
+  window.addEventListener('storage',event=>{if(event.key==='dough-theme'||event.key===null)applyTheme(event.newValue,event.newValue!==null&&event.newValue!==validTheme(event.newValue))});
   themeTrigger.addEventListener('click',()=>{
     if(!themePanel.hidden){closeTheme(true);return}
     closeMenu();

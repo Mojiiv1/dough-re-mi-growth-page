@@ -7,7 +7,7 @@ This preview is intentionally noindex and reuses the existing Dough Re Mi image 
 
 Included:
 - responsive Home / Menu / Our Story / Visit pages
-- Light / System / Dark theme selector
+- Light / Dark theme selector
 - accessible mobile navigation
 - sticky mobile quick actions
 - gallery dialog with next/previous, keyboard arrows and swipe support
