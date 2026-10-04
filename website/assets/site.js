@@ -1,38 +1,269 @@
-/* FINAL_QA_PATCH */
 
-(()=> {
-  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-  const key="dough-theme", media=matchMedia("(prefers-color-scheme: dark)");
-  const pref=()=>{try{return localStorage.getItem(key)||"system"}catch{return"system"}};
-  const apply=(p,save=false)=>{if(save)try{localStorage.setItem(key,p)}catch{};const t=p==="system"?(media.matches?"dark":"light"):p;document.documentElement.dataset.theme=t;$("[data-theme-option]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.themeOption===p)));const meta=$('meta[name="theme-color"]');if(meta)meta.setAttribute("content",t==="dark"?"#151A17":"#F6F0E7");const trigger=$("[data-theme-trigger]");if(trigger)trigger.setAttribute("aria-label",`Color theme: ${p}${p==="system"?` (${t})`:""}. Change theme`)};
-  apply(pref()); media.addEventListener?.("change",()=>pref()==="system"&&apply("system"));
-  const trig=$("[data-theme-trigger]"), panel=$("[data-theme-panel]");
-  if(trig&&panel){const close=(focus=false)=>{panel.hidden=true;trig.setAttribute("aria-expanded","false");if(focus)trig.focus()};trig.onclick=()=>{panel.hidden=!panel.hidden;trig.setAttribute("aria-expanded",String(!panel.hidden));if(!panel.hidden)$('[aria-pressed="true"]',panel)?.focus()};$$("[data-theme-option]",panel).forEach(b=>b.onclick=()=>{apply(b.dataset.themeOption,true);close(true)});document.addEventListener("click",e=>!panel.contains(e.target)&&!trig.contains(e.target)&&close());document.addEventListener("keydown",e=>e.key==="Escape"&&!panel.hidden&&close(true))}
-  const menu=$("[data-menu-toggle]"), nav=$("[data-nav]");
-  if(menu&&nav){
-    const close=(focus=false)=>{nav.classList.remove("open");menu.setAttribute("aria-expanded","false");document.body.style.overflow="";if(focus)menu.focus()};
-    const open=()=>{nav.classList.add("open");menu.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";$("a",nav)?.focus()};
-    menu.onclick=()=>nav.classList.contains("open")?close(true):open();
-    $("a",nav).forEach(a=>a.onclick=()=>close());
-    document.addEventListener("click",e=>{if(nav.classList.contains("open")&&!nav.contains(e.target)&&!menu.contains(e.target))close()});
-    document.addEventListener("keydown",e=>{
-      if(!nav.classList.contains("open"))return;
-      if(e.key==="Escape"){e.preventDefault();close(true);return}
-      if(e.key==="Tab"){
-        const items=[menu,...$('a[href],button:not([disabled])',nav)];
-        const first=items[0],last=items[items.length-1];
-        if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
-        else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+(()=>{
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const THEME_KEY="dough-theme";
+  const themeMedia=window.matchMedia("(prefers-color-scheme: dark)");
+  const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const readTheme=()=>{
+    try{return localStorage.getItem(THEME_KEY)||"system"}catch{return"system"}
+  };
+
+  const resolveTheme=(preference)=>{
+    if(preference==="system") return themeMedia.matches?"dark":"light";
+    return preference;
+  };
+
+  const applyTheme=(preference,persist=false)=>{
+    const resolved=resolveTheme(preference);
+    if(persist){try{localStorage.setItem(THEME_KEY,preference)}catch{}}
+    document.documentElement.dataset.theme=resolved;
+    document.documentElement.dataset.themePreference=preference;
+
+    const meta=$('meta[name="theme-color"]');
+    if(meta) meta.setAttribute("content",resolved==="dark"?"#111613":"#F7F2EA");
+
+    $$("[data-theme-option]").forEach((button)=>{
+      const selected=button.dataset.themeOption===preference;
+      button.setAttribute("aria-pressed",String(selected));
+    });
+
+    const trigger=$("[data-theme-trigger]");
+    const icon=$("[data-theme-trigger-icon]");
+    if(icon) icon.textContent=preference==="light"?"☀":preference==="dark"?"☾":"◐";
+    if(trigger){
+      const suffix=preference==="system"?" ("+resolved+")":"";
+      trigger.setAttribute("aria-label","Appearance: "+preference+suffix+". Change appearance");
+      trigger.title="Appearance: "+preference+suffix;
+    }
+  };
+
+  applyTheme(readTheme());
+
+  themeMedia.addEventListener?.("change",()=>{
+    if(readTheme()==="system") applyTheme("system");
+  });
+
+  const themeTrigger=$("[data-theme-trigger]");
+  const themePanel=$("[data-theme-panel]");
+  if(themeTrigger&&themePanel){
+    const closeTheme=(restore=false)=>{
+      themePanel.hidden=true;
+      themeTrigger.setAttribute("aria-expanded","false");
+      if(restore) themeTrigger.focus();
+    };
+    const openTheme=()=>{
+      themePanel.hidden=false;
+      themeTrigger.setAttribute("aria-expanded","true");
+      const selected=$('[aria-pressed="true"]',themePanel)||$("[data-theme-option]",themePanel);
+      selected?.focus();
+    };
+
+    themeTrigger.addEventListener("click",()=>{
+      themePanel.hidden?openTheme():closeTheme(true);
+    });
+
+    $$("[data-theme-option]",themePanel).forEach((button)=>{
+      button.addEventListener("click",()=>{
+        applyTheme(button.dataset.themeOption,true);
+        closeTheme(true);
+      });
+    });
+
+    document.addEventListener("click",(event)=>{
+      if(!themePanel.hidden&&!themePanel.contains(event.target)&&!themeTrigger.contains(event.target)) closeTheme();
+    });
+
+    document.addEventListener("keydown",(event)=>{
+      if(event.key==="Escape"&&!themePanel.hidden){
+        event.preventDefault();
+        closeTheme(true);
       }
     });
-    addEventListener("resize",()=>{if(innerWidth>1023&&nav.classList.contains("open"))close()},{passive:true});
   }
-  const dlg=$("[data-lightbox]"), pics=$$("[data-photo]"); let idx=0,opener=null,start=null;
-  if(dlg&&pics.length){const img=$("img",dlg),cap=$("[data-caption]",dlg),count=$("[data-count]",dlg);const render=()=>{const src=$("img",pics[idx]);img.src=src.src;img.alt=src.alt;cap.textContent=src.alt;count.textContent=(idx+1)+" / "+pics.length};const move=d=>{idx=(idx+d+pics.length)%pics.length;render()};pics.forEach((b,i)=>b.onclick=()=>{idx=i;opener=b;render();dlg.showModal();$("[data-close]",dlg).focus()});$("[data-close]",dlg).onclick=()=>dlg.close();$("[data-prev]",dlg).onclick=()=>move(-1);$("[data-next]",dlg).onclick=()=>move(1);dlg.addEventListener("click",e=>e.target===dlg&&dlg.close());dlg.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")move(-1);if(e.key==="ArrowRight")move(1)});dlg.addEventListener("close",()=>opener?.focus());dlg.addEventListener("touchstart",e=>start=e.changedTouches[0].clientX,{passive:true});dlg.addEventListener("touchend",e=>{if(start==null)return;const d=e.changedTouches[0].clientX-start;if(Math.abs(d)>45)move(d>0?-1:1);start=null},{passive:true})}
-  const filters=$$("[data-filter]"), cats=$$("[data-category]"), status=$("[data-filter-status]");
-  filters.forEach(b=>b.onclick=()=>{const f=b.dataset.filter;filters.forEach(x=>x.setAttribute("aria-pressed",String(x===b)));cats.forEach(c=>c.hidden=f!=="all"&&c.dataset.category!==f);if(status)status.textContent=f==="all"?"Showing all menu categories":`Showing ${b.textContent.trim()}`});
-  const top=$("[data-top]");if(top){const sync=()=>top.classList.toggle("show",scrollY>650);addEventListener("scroll",sync,{passive:true});sync();top.onclick=()=>scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
-  const toast=$("[data-toast]");let timer;const say=m=>{if(!toast)return;toast.textContent=m;toast.classList.add("show");clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove("show"),2000)};
-  $$("[data-copy]").forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);say("Address copied")}catch{say("Copy unavailable")}});
-  $$("[data-share]").forEach(b=>b.onclick=async()=>{try{if(navigator.share)await navigator.share({title:"Dough Re Mi Bakery & Cafe",text:"Dough Re Mi Bakery & Cafe in Ottawa",url:location.href});else{await navigator.clipboard.writeText(location.href);say("Page link copied")}}catch(e){if(e.name!=="AbortError")say("Sharing unavailable")}});
+
+  const menuButton=$("[data-menu-toggle]");
+  const nav=$("[data-nav]");
+  if(menuButton&&nav){
+    const closeMenu=(restore=false)=>{
+      nav.classList.remove("open");
+      menuButton.setAttribute("aria-expanded","false");
+      document.body.classList.remove("menu-open");
+      if(restore) menuButton.focus();
+    };
+    const openMenu=()=>{
+      nav.classList.add("open");
+      menuButton.setAttribute("aria-expanded","true");
+      document.body.classList.add("menu-open");
+      $("a",nav)?.focus();
+    };
+
+    menuButton.addEventListener("click",()=>{
+      nav.classList.contains("open")?closeMenu(true):openMenu();
+    });
+
+    $$("a",nav).forEach((link)=>link.addEventListener("click",()=>closeMenu()));
+
+    document.addEventListener("click",(event)=>{
+      if(nav.classList.contains("open")&&!nav.contains(event.target)&&!menuButton.contains(event.target)) closeMenu();
+    });
+
+    document.addEventListener("keydown",(event)=>{
+      if(!nav.classList.contains("open")) return;
+
+      if(event.key==="Escape"){
+        event.preventDefault();
+        closeMenu(true);
+        return;
+      }
+
+      if(event.key==="Tab"){
+        const focusable=[menuButton,...$$('a[href],button:not([disabled])',nav)];
+        const first=focusable[0];
+        const last=focusable[focusable.length-1];
+        if(event.shiftKey&&document.activeElement===first){
+          event.preventDefault();
+          last.focus();
+        }else if(!event.shiftKey&&document.activeElement===last){
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    window.addEventListener("resize",()=>{
+      if(window.innerWidth>1023&&nav.classList.contains("open")) closeMenu();
+    },{passive:true});
+  }
+
+  const dialog=$("[data-lightbox]");
+  const photos=$$("[data-photo]");
+  if(dialog&&photos.length){
+    const image=$("img",dialog);
+    const caption=$("[data-caption]",dialog);
+    const count=$("[data-count]",dialog);
+    const closeButton=$("[data-close]",dialog);
+    const prev=$("[data-prev]",dialog);
+    const next=$("[data-next]",dialog);
+    let index=0;
+    let opener=null;
+    let touchStart=null;
+
+    const render=()=>{
+      const source=$("img",photos[index]);
+      image.src=source.currentSrc||source.src;
+      image.alt=source.alt;
+      caption.textContent=source.alt;
+      count.textContent=(index+1)+" / "+photos.length;
+    };
+
+    const move=(delta)=>{
+      index=(index+delta+photos.length)%photos.length;
+      render();
+    };
+
+    photos.forEach((button,i)=>{
+      button.addEventListener("click",()=>{
+        index=i;
+        opener=button;
+        render();
+        dialog.showModal();
+        closeButton?.focus();
+      });
+    });
+
+    closeButton?.addEventListener("click",()=>dialog.close());
+    prev?.addEventListener("click",()=>move(-1));
+    next?.addEventListener("click",()=>move(1));
+
+    dialog.addEventListener("click",(event)=>{
+      if(event.target===dialog) dialog.close();
+    });
+
+    dialog.addEventListener("keydown",(event)=>{
+      if(event.key==="ArrowLeft"){event.preventDefault();move(-1)}
+      if(event.key==="ArrowRight"){event.preventDefault();move(1)}
+    });
+
+    dialog.addEventListener("touchstart",(event)=>{
+      touchStart=event.changedTouches[0]?.clientX??null;
+    },{passive:true});
+
+    dialog.addEventListener("touchend",(event)=>{
+      if(touchStart===null) return;
+      const end=event.changedTouches[0]?.clientX??touchStart;
+      const delta=end-touchStart;
+      touchStart=null;
+      if(Math.abs(delta)>48) move(delta>0?-1:1);
+    },{passive:true});
+
+    dialog.addEventListener("close",()=>opener?.focus());
+  }
+
+  const filterButtons=$$("[data-filter]");
+  const categories=$$("[data-category]");
+  const filterStatus=$("[data-filter-status]");
+  filterButtons.forEach((button)=>{
+    button.addEventListener("click",()=>{
+      const filter=button.dataset.filter;
+      filterButtons.forEach((item)=>item.setAttribute("aria-pressed",String(item===button)));
+      categories.forEach((section)=>{
+        section.hidden=filter!=="all"&&section.dataset.category!==filter;
+      });
+      if(filterStatus){
+        filterStatus.textContent=filter==="all"?"Showing all menu categories":"Showing "+button.textContent.trim();
+      }
+    });
+  });
+
+  const backTop=$("[data-top]");
+  if(backTop){
+    const sync=()=>backTop.classList.toggle("show",window.scrollY>650);
+    window.addEventListener("scroll",sync,{passive:true});
+    sync();
+    backTop.addEventListener("click",()=>{
+      window.scrollTo({top:0,behavior:reduceMotion.matches?"auto":"smooth"});
+    });
+  }
+
+  const toast=$("[data-toast]");
+  let toastTimer;
+  const announce=(message)=>{
+    if(!toast) return;
+    toast.textContent=message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>toast.classList.remove("show"),2200);
+  };
+
+  $$("[data-copy]").forEach((button)=>{
+    button.addEventListener("click",async()=>{
+      try{
+        await navigator.clipboard.writeText(button.dataset.copy);
+        announce("Address copied");
+      }catch{
+        announce("Copy unavailable");
+      }
+    });
+  });
+
+  $$("[data-share]").forEach((button)=>{
+    button.addEventListener("click",async()=>{
+      try{
+        if(navigator.share){
+          await navigator.share({
+            title:"Dough Re Mi Bakery & Cafe",
+            text:"Dough Re Mi Bakery & Cafe in Ottawa",
+            url:window.location.href
+          });
+        }else{
+          await navigator.clipboard.writeText(window.location.href);
+          announce("Page link copied");
+        }
+      }catch(error){
+        if(error?.name!=="AbortError") announce("Sharing unavailable");
+      }
+    });
+  });
 })();
