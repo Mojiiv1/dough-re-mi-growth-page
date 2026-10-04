@@ -11,7 +11,7 @@
   function applyTheme(value,persist=false){
     preference=validTheme(value);
     document.documentElement.dataset.theme=preference;
-    $('meta[name="theme-color"]').content=preference==='dark'?'#101713':'#f7f2ea';
+    $('meta[name="theme-color"]').content=preference==='dark'?'#1b211c':'#f7f2ea';
     if(persist){try{localStorage.setItem('dough-theme',preference)}catch{}}
     $$('[data-theme-option]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.themeOption===preference)));
     themeTrigger.setAttribute('aria-label',`Theme: ${preference}. Change appearance`);

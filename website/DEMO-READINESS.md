@@ -7,7 +7,7 @@ This is sufficient for a guided prospect demo: four complete routes, real café 
 - Explain that the full menu and business story are awaiting owner input. Category previews are not a priced menu.
 - Keep noindex enabled and the Tap & Grow concept credit visible.
 - Confirm permission to present the business branding and photographs; repository availability alone does not establish reuse rights.
-- Reconfirm the displayed 4.8 Google rating if it will be discussed as current. It is not a live feed.
+- Recheck the two attributed Google review excerpts before an owner-approved launch; source and verification date are recorded in DESIGN.md.
 
 ## Owner confirmation before production
 - Official phone and exact weekly/holiday hours.
