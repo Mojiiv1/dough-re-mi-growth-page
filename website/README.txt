@@ -30,3 +30,5 @@ Production information required from the business:
 - Final production domain.
 
 Keep noindex,nofollow until an explicitly approved production launch. Reconfirm the displayed Google rating before launch; exact review counts are omitted. After owner confirmation, implement Bakery / CafeOrCoffeeShop JSON-LD with verified name, address, phone, hours, official website and Instagram. Do not invent ratings, geo coordinates or menu data.
+
+Demo handoff and owner-confirmation checklist: DEMO-READINESS.md.

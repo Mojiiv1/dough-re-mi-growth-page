@@ -9,7 +9,7 @@ button, a { touch-action: manipulation; -webkit-tap-highlight-color: var(--accen
 button:disabled { opacity: .55; cursor: not-allowed; }
 button[aria-busy='true'] { cursor: progress; }
 a:hover { text-decoration-thickness: 2px; }
-button:active:not(:disabled), a:active { opacity: .8; }
+button:active:not(:disabled), a:active { outline: 2px solid currentColor; outline-offset: 2px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 [hidden] { display: none !important; }
 :target { scroll-margin-top: 7rem; }
@@ -114,7 +114,7 @@ p { margin: 0 0 var(--space-6); max-width: 65ch; }
 .lightbox-inner { position: relative; padding-top: var(--space-16); }
 .lightbox img { width: 100%; height: min(65dvh,42rem); object-fit: contain; }
 .lightbox-close, .lb-nav { position: absolute; width: 3rem; height: 3rem; border: 1px solid var(--inverse-border); border-radius: var(--radius-control); background: var(--inverse-bg); color: var(--inverse-text); font-size: 1.5rem; }
-.lightbox-close:hover, .lb-nav:hover { background: var(--inverse-border); }
+.lightbox-close:hover, .lb-nav:hover { background: var(--inverse-hover); }
 .lightbox-close { right: var(--space-2); top: var(--space-2); }
 .lb-prev { left: var(--space-2); top: 50%; }
 .lb-next { right: var(--space-2); top: 50%; }

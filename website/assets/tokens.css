@@ -22,6 +22,7 @@
   --inverse-text: #fffdf8;
   --inverse-muted: #dedfd2;
   --inverse-border: #7a887b;
+  --inverse-hover: #354d3c;
   --footer-bg: var(--inverse-bg);
   --review-bg: var(--inverse-bg);
   --review-stars: var(--inverse-text);
@@ -85,6 +86,7 @@ html[data-theme='dark'] {
   --inverse-text: #f4efe7;
   --inverse-muted: #beb5aa;
   --inverse-border: #84917c;
+  --inverse-hover: #30412c;
   --footer-bg: #0c100e;
   --review-bg: #2b3e30;
   --review-stars: #f0c979;

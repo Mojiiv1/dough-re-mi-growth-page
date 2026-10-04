@@ -64,3 +64,11 @@ Executed for this revision using headless Edge / Playwright and axe-core 4.10.3:
 - Git diff whitespace validation passed. Only intentional website files staged.
 
 Physical-device testing, screen-reader testing and native browser-menu 200% zoom were not performed. Automated axe results are regression evidence, not a declaration of complete WCAG conformance.
+
+# Demo accessibility follow-up — 2026-10-04
+
+Fixed an interaction-state gap: inverse lightbox hover buttons now use a dedicated dark hover surface instead of their lighter border color. Pressed links/buttons keep full opacity and use an outline, preserving text contrast and visible feedback. Approved palettes and layout remain intact.
+
+Executed: 48 four-page/viewport/theme layout checks at 320, 375, 430, 768, 1024 and 1440; 96 closed/open-popover WCAG A/AA axe audits; six additional lightbox hover audits across both themes. All passed with zero automated violations. Tested pressed CTA opacity, theme refresh persistence, legacy migration, OS independence, storage denial, keyboard selection/dismissal, popover clipping/stacking and reduced motion. Inspected a fresh dark-mode browser screenshot. Git whitespace check passed.
+
+Added DEMO-READINESS.md separating presentation checks, owner confirmations and production launch work. This is a prospect demo, not a claim of complete WCAG certification. Real-device, screen-reader and native browser zoom/share-sheet checks remain outstanding; no claim those were performed in this follow-up.
