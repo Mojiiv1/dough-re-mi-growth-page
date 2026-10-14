@@ -14,12 +14,9 @@ const business = {
   instagram: "https://www.instagram.com/doughremi.ottawa/?hl=en",
   maps: "https://maps.app.goo.gl/B6CUK27HFEZUmbQdA",
 
-  // Current known website from the business listing.
-  website: "https://drm-bakeryandcafe.com",
-
-  // No dedicated menu URL was supplied yet.
-  // For now the Menu button opens the website. Replace this later.
-  menu: "https://drm-bakeryandcafe.com"
+  // Shareable demo website and display-only sample menu.
+  website: "https://mojiiv1.github.io/dough-re-mi-growth-page/website/",
+  menu: "https://mojiiv1.github.io/dough-re-mi-growth-page/website/menu/"
 };
 
 const links = [
@@ -49,14 +46,14 @@ const links = [
     href: business.maps
   },
   {
-    title: "View Our Menu",
-    subtitle: "Explore our delicious items",
+    title: "Preview Our Menu",
+    subtitle: "Sample items and prices",
     icon: "🍴",
     href: business.menu
   },
   {
-    title: "Visit Our Website",
-    subtitle: "Learn more about us",
+    title: "View Demo Website",
+    subtitle: "Preview the new bakery website",
     icon: "🌐",
     href: business.website
   }
