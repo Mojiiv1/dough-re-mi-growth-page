@@ -38,6 +38,7 @@
 <nav id="main-nav" class="links" aria-label="Main navigation" data-nav><a href="../index.html">Home</a><a href="../menu/index.html" aria-current="page">Menu</a><a href="../about/index.html">Our Story</a><a href="../visit/index.html">Visit</a><a href="https://www.instagram.com/doughremi.ottawa/?hl=en" target="_blank" rel="noopener">Instagram</a><a class="btn primary" href="https://maps.app.goo.gl/B6CUK27HFEZUmbQdA" target="_blank" rel="noopener">Directions</a>
 </nav>
 <div class="actions">
+<button class="lang-toggle" type="button" data-lang-toggle aria-label="Passer au français">FR</button>
 <div class="theme" data-theme-control>
   <button class="theme-trigger" type="button" aria-label="Theme: light. Change appearance" aria-expanded="false" aria-controls="theme-panel" data-theme-trigger>
     <span class="theme-trigger-icon" aria-hidden="true" data-theme-trigger-icon>☀</span>
@@ -70,67 +71,15 @@
 </section>
 <section class="section">
 <div class="container">
-<div class="panel">
-<h2>Full menu coming soon</h2>
-<p>These café photos offer a taste of what to expect. Visit us for today’s selection; the full menu and prices will be shared here soon.</p>
+<div class="panel demo-notice" role="note">
+<p class="demo-badge">Demo menu · Menu fictif</p>
+<h2>Sample items and prices only</h2>
+<p>Nothing on this page is an official product, price or availability claim. Ask in café for today’s selection. The owner-verified menu is pending.</p>
 </div>
 <div class="filters" role="group" aria-label="Filter menu categories"><button data-filter="all" aria-pressed="true">All</button><button data-filter="pastries" aria-pressed="false">Pastries & Desserts</button><button data-filter="coffee" aria-pressed="false">Coffee & Drinks</button><button data-filter="baked" aria-pressed="false">Baked Goods</button>
 </div>
 <p class="sr" aria-live="polite" data-filter-status></p>
-<section class="menu-cat" data-category="pastries">
-<div class="menu-head">
-<p class="eyebrow">Category 01</p>
-<h2>Pastries & Desserts</h2>
-</div>
-<div class="menu-list">
-<article class="menu-item"><img src="../../assets/highlight-2.jpg" alt="Pastry dessert at Dough Re Mi" loading="lazy" width="900" height="900" decoding="async">
-<div>
-<h3>Pastries</h3>
-<p>Something sweet for your next coffee break.</p>
-</div>
-</article>
-<article class="menu-item"><img src="../../assets/highlight-4.jpg" alt="Dessert and coffee at Dough Re Mi" loading="lazy" width="900" height="900" decoding="async">
-<div>
-<h3>Desserts</h3>
-<p>Explore the café’s desserts.</p>
-</div>
-</article>
-</div>
-</section>
-<section class="menu-cat" data-category="coffee">
-<div class="menu-head">
-<p class="eyebrow">Category 02</p>
-<h2>Specialty Coffee & Café Drinks</h2>
-</div>
-<div class="menu-list">
-<article class="menu-item"><img src="../../assets/highlight-1.jpg" alt="Specialty drink at Dough Re Mi" loading="lazy" width="900" height="900" decoding="async">
-<div>
-<h3>Specialty coffee</h3>
-<p>Specialty coffee at the café.</p>
-</div>
-</article>
-<article class="menu-item"><img src="../../assets/highlight-3.jpg" alt="Green iced café drink at Dough Re Mi" loading="lazy" width="900" height="900" decoding="async">
-<div>
-<h3>Café drinks</h3>
-<p>A glimpse of the drinks at Dough Re Mi.</p>
-</div>
-</article>
-</div>
-</section>
-<section class="menu-cat" data-category="baked">
-<div class="menu-head">
-<p class="eyebrow">Category 03</p>
-<h2>Baked Goods</h2>
-</div>
-<div class="menu-list">
-<article class="menu-item"><img src="../../assets/highlight-7.jpg" alt="Baked item and café drink at Dough Re Mi" loading="lazy" width="900" height="900" decoding="async">
-<div>
-<h3>Baked goods</h3>
-<p>Visit the café to see today’s selection.</p>
-</div>
-</article>
-</div>
-</section>
+<div data-menu-root></div>
 </div>
 </section>
 </main>
@@ -152,6 +101,7 @@
 </div>
 </div>
 </footer>
-<script src="../assets/site.js?v=20261004-cafe"></script>
+<script src="../assets/menu-data.js?v=20261013"></script>
+<script src="../assets/site.js?v=20261013"></script>
 </body>
 </html>
