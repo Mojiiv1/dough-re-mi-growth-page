@@ -23,7 +23,7 @@ Design system: DESIGN.md describes intent; assets/tokens.css defines semantic va
 QA evidence and limitations: QA.md.
 
 Production information required from the business:
-- Official phone and exact opening hours.
+- Exact opening hours.
 - Full menu, prices and any dietary/availability claims.
 - Direct Google Review URL for the future NFC/QR review flow. Keep the existing Google Profile CTA until supplied; update its label and destination together.
 - Founder/business story and services (catering, custom cakes, ordering).
@@ -32,3 +32,17 @@ Production information required from the business:
 Keep noindex,nofollow until an explicitly approved production launch. Ratings and counts are omitted; only add genuine attributed testimonials from verified sources. After owner confirmation, implement Bakery / CafeOrCoffeeShop JSON-LD with verified name, address, phone, hours, official website and Instagram. Do not invent ratings, geo coordinates or menu data.
 
 Demo handoff and owner-confirmation checklist: DEMO-READINESS.md.
+
+Editing the demo menu
+---------------------
+- Open `website/assets/menu-data.js`; it is the single menu data source.
+- Each category and item has English and French text beside its sample price.
+- Keep the “sample / fictif” labels until the business has approved every item and price.
+- The menu is display-only. Do not add ordering, delivery, payment or checkout links.
+
+Replacing images
+----------------
+- This preview uses only the supplied files in `/assets/`.
+- Keep the same path or update the relevant HTML `src`, preserve meaningful alt text, and use only imagery the business owns or has licensed.
+
+The English/French choice and Light/Dark choice are both manual and persist locally. Opening hours remain pending owner confirmation. The supplied phone number is +1 613 747 0707.

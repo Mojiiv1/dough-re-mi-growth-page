@@ -104,3 +104,16 @@ Executed QA:
 - Canonical/OG URLs and robots metadata unchanged. No tracking, embeds, forms, widgets, photo downloads or new business facts. Only the changed stylesheet cache key is refreshed; JS/token cache keys retained.
 
 Limits: no physical-device, screen-reader, native share-sheet or native browser-menu zoom testing. Automated results are regression evidence, not complete WCAG certification. Stop condition reached: audited issues fixed and QA passed.
+
+# Bilingual menu implementation — 2026-10-13
+
+- Scope remains limited to `/website/`; Git diff confirms the root NFC Growth Page and supplied assets are unchanged.
+- JavaScript syntax checks pass for `assets/site.js` and the new central `assets/menu-data.js`.
+- Every local `src` and `href` on Home, Menu, Our Story and Visit resolves on disk.
+- Git whitespace validation passes.
+- Light/Dark remains a two-choice manual preference; English/French is a separate two-choice manual preference. Both use local persistence and neither follows the operating system.
+- The menu is display-only and every price is labelled `sample` or `fictif`, reinforced by a conspicuous page notice. No order, delivery, payment or checkout flow exists.
+- Opening hours remain explicitly unverified and point visitors to the supplied Google profile. The supplied phone, address, Instagram and Maps destinations are used as provided.
+- Existing mobile-first breakpoints remain at phone, tablet and desktop widths. The added language control uses the existing 48px control height; the four-item information strip becomes one full-width address row plus three equal actions on small screens.
+
+This environment could not connect its isolated visual-browser surface to the local preview server, so this revision does not claim a fresh screenshot/axe run. The repository’s preceding 320–1440px and Light/Dark audit evidence remains documented above; visual review of the new bilingual/menu state is still recommended in the PR preview before merge.
