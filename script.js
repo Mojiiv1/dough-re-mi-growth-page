@@ -50,12 +50,6 @@ const links = [
     subtitle: "Sample items and prices",
     icon: "🍴",
     href: business.menu
-  },
-  {
-    title: "View Demo Website",
-    subtitle: "Preview the new bakery website",
-    icon: "🌐",
-    href: business.website
   }
 ];
 
