@@ -170,6 +170,18 @@ h1 {
   border-color: rgba(255,255,255,.30);
 }
 
+.demo-links { padding-top: 0; }
+
+.link-card.demo-link {
+  border-color: rgba(212,173,85,.56);
+  background: linear-gradient(135deg, rgba(111,84,43,.70), rgba(41,32,22,.92));
+}
+
+.link-card.demo-link .icon-wrap {
+  border-color: rgba(212,173,85,.44);
+  background: rgba(212,173,85,.12);
+}
+
 .link-card.primary .link-sub { color: rgba(26,19,9,.72); }
 .link-card.primary .icon-wrap { background: rgba(74,47,8,.22); }
 
